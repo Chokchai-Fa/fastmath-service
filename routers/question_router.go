@@ -25,11 +25,13 @@ func initQuestionRoute(group *gin.RouterGroup, dbPostgres *dbpostgres.DBPG, dbPo
 		QuestionService: questionService,
 	}
 
-	questionHandler, err := controllers.NewQuestionHandler(allSerivce)
+	questionHandler, err := controllers.NewQuestionController(allSerivce)
 	if err != nil {
 		log.Fatal("Handler error!:", err.Error())
 	}
 
 	group.GET("/", questionHandler.GetAllQuestion)
+
+	group.GET("/:id", questionHandler.GetQuestion)
 
 }

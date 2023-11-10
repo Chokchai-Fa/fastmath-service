@@ -4,8 +4,7 @@ import (
 	"database/sql"
 	"fastmath/routers"
 	"fastmath/utils/dbpostgres"
-	"fmt"
-	"log"
+	"fastmath/utils/logs"
 	"os"
 	"strconv"
 	"time"
@@ -18,18 +17,18 @@ func init() {
 
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		logs.Error("Error loading .env file")
 	}
 
-	fmt.Println("ENV: ", os.Getenv("ENV"))
-	fmt.Println("PORT: ", os.Getenv("PORT"))
+	logs.Info("ENV: " + os.Getenv("ENV"))
+	logs.Info("PORT: " + os.Getenv("PORT"))
 }
 
 func connectDBPostgres() (*dbpostgres.DBPG, *sql.DB) {
 
 	port, err := strconv.Atoi(os.Getenv("PG_PORT"))
 	if err != nil {
-		log.Fatal("get pg port error|:", err.Error())
+		logs.Error("get pg port error|:" + err.Error())
 		os.Exit(0)
 	}
 
@@ -47,13 +46,13 @@ func connectDBPostgres() (*dbpostgres.DBPG, *sql.DB) {
 	dbPGCli.SetMaxIdleConns(25)
 
 	if err != nil {
-		log.Fatal("Postgres.Connect|:", err.Error())
+		logs.Error("Postgres.Connect|:" + err.Error())
 		os.Exit(0)
 	}
 
 	err = dbPGCli.Ping()
 	if err != nil {
-		log.Fatal("Postgres.Ping|:", err.Error())
+		logs.Error("Postgres.Ping|:" + err.Error())
 		os.Exit(0)
 	}
 
@@ -67,5 +66,5 @@ func main() {
 	router.Use(gin.Recovery())
 	routers.SetupRouter(router, dbPG, dbPGCli)
 	port := os.Getenv("PORT")
-	log.Fatal(router.Run(":" + port))
+	logs.Error(router.Run(":" + port))
 }
