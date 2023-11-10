@@ -23,7 +23,6 @@ func NewQuestionService(allRepo AllRepository) (QuestionService, error) {
 func (h *questionService) GetAllQuestion() (*string, error) {
 
 	res := "1"
-	print("call service")
 
 	_, err := h.questionRepo.GetAllQuestion()
 	if err != nil {

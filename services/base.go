@@ -4,8 +4,6 @@ import (
 	"fastmath/repositories"
 )
 
-// import "gisx-api-formula/repositories"
-
 type AllRepository struct {
 	QuestionRepository repositories.QuestionRepository
 }

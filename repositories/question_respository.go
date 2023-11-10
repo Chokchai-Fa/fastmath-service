@@ -23,8 +23,5 @@ func NewQuestionRepositoryDB(dbPostgres *dbpostgres.DBPG, dbPostgresCli *sql.DB)
 }
 
 func (h *questionRepo) GetAllQuestion() (*string, error) {
-
-	print("call repository")
-
 	return nil, errors.NewUnexpectedError()
 }
